@@ -75,6 +75,7 @@ class city:
 
 
 
+
     def Run(self):
         #TU jakoś zrobić żeby sprawdzał czego brakuje i dorzucał rzeczy.
         print(city())
