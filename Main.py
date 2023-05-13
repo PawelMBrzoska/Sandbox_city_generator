@@ -133,9 +133,17 @@ def Start(City):
         City.cells[City.Update_resources_up()].set(value)
         Push_to_city()
 
+    def Optimize_down():
+        value = int(City.cells[City.Update_resources_down()].get())
+        value-=1
+        City.cells[City.Update_resources_down()].set(value)
+        Push_to_city()
+        
+
     Button(frm, text="Load", command=Load_from_file).grid(column=6, row=0)
     Button(frm, text="Push", command=Push_to_city).grid(column=6, row=1)
     Button(frm, text="Opt_up", command=Optimize_up).grid(column=6, row=2)
+    Button(frm, text="Opt_down", command=Optimize_down).grid(column=6, row=3)
 
     window.mainloop()
 

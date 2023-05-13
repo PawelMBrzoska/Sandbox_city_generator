@@ -103,40 +103,46 @@ class city:
                 City2.Suma += getattr(City2, res)**2
             City2.Suma -= getattr(City2, "People")**2
             Suma = City2.Suma/City2.People # This is basically a optimization function. As city size inflated margin of error, we get an error per person
-            Suma = round(math.log10(Suma),3) # And as it is HUGE often we get log10 to comprehend this number ;D
-            
+            Suma = round(math.log10(Suma),3) # And as it is HUGE often we get log10 to comprehend this number ;D    
             ranking[entity] = Suma
-            sorted_tests = sorted(ranking.items(), key=lambda x: x[1])
-
+            
             #if tested_suma < New_suma: 
             #    New_suma = tested_suma
             #    New_entity = entity
-            
+        sorted_tests = sorted(ranking.items(), key=lambda x: x[1])
         return(sorted_tests[0][0])
 
     def Update_resources_down(self):
-        New_suma = self.Suma
-        New_entity = ""
-        for entity in self.entities:
-            tested_suma = New_suma
-            tested_suma -= self.entities_dict[entity]['Food']**2
-            tested_suma -= self.entities_dict[entity]['Buildings']**2
-            tested_suma -= self.entities_dict[entity]['Tools']**2
-            tested_suma -= self.entities_dict[entity]['Materials']**2
-            tested_suma -= self.entities_dict[entity]['Other']**2
-            tested_suma -= self.entities_dict[entity]['Safety']**2
-            tested_suma -= self.entities_dict[entity]['Fun']**2
-            tested_suma -= self.entities_dict[entity]['Wood']**2
-            tested_suma -= self.entities_dict[entity]['Stone']**2
-            tested_suma -= self.entities_dict[entity]['Herbs']**2
-            tested_suma -= self.entities_dict[entity]['Transport']**2
-            tested_suma = tested_suma/(self.People+self.entities_dict[entity]['People'])
-            tested_suma = round(math.log10(tested_suma),3)
-            if tested_suma < New_suma: 
-                New_suma = tested_suma
-                New_entity = entity
+        ranking = {}
+        
+        City2 = city()
+        
+        for entity, value in self.entities.items():
+            if value >0:
+                Suma = 0
+                City2 = copy.copy(self)
+                City2.Get_resources()
+                City2.People -= self.entities_dict[entity]['People']
+                City2.Food -= self.entities_dict[entity]['Food']
+                City2.Buildings -= self.entities_dict[entity]['Buildings']
+                City2.Tools -= self.entities_dict[entity]['Tools']
+                City2.Materials -= self.entities_dict[entity]['Materials']
+                City2.Other -= self.entities_dict[entity]['Other']
+                City2.Safety -= self.entities_dict[entity]['Safety']
+                City2.Fun -= self.entities_dict[entity]['Fun']
+                City2.Wood -= self.entities_dict[entity]['Wood']
+                City2.Stone -= self.entities_dict[entity]['Stone']
+                City2.Herbs -= self.entities_dict[entity]['Herbs']
+                City2.Transport -= self.entities_dict[entity]['Transport']
+                for i, res in enumerate(resources):
+                    City2.Suma += getattr(City2, res)**2
+                City2.Suma -= getattr(City2, "People")**2
+                Suma = City2.Suma/City2.People # This is basically a optimization function. As city size inflated margin of error, we get an error per person
+                Suma = round(math.log10(Suma),3) # And as it is HUGE often we get log10 to comprehend this number ;D
+                ranking[entity] = Suma
 
-        return(New_entity)
+        sorted_tests = sorted(ranking.items(), key=lambda x: x[1])
+        return(sorted_tests[0][0])
 
 if __name__ == "__main__":
     pass
