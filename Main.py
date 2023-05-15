@@ -112,10 +112,17 @@ def Start(City):
             City.cells[cell].set(City.df[cell])
     
     def Push_to_city():
+        City.entities_unlocked = []
         City.Suma = 0
         Suma = 0
         for cell in City.cells:
-            City.entities[cell] = int(City.cells[cell].get())
+            out = City.cells[cell].get()
+            if "$" in out:
+                out = out.replace("$", "")
+                City.entities[cell] = int(out)
+            else: 
+                City.entities[cell] = int(out)
+                City.entities_unlocked.append(cell) #Add unlocked cells to operate in optimization
 
         City.Get_resources()
         for i, res in enumerate(resources):
@@ -128,18 +135,23 @@ def Start(City):
         City.labels["suma"].set(Suma)
 
     def Optimize_up():
-        value = int(City.cells[City.Update_resources_up()].get())
+        Push_to_city()
+        result = City.Update_resources_up()
+        print(result)
+        value = int(City.cells[result[0][0]].get())
         value+=1
-        City.cells[City.Update_resources_up()].set(value)
+        City.cells[result[0][0]].set(value)
         Push_to_city()
 
     def Optimize_down():
-        value = int(City.cells[City.Update_resources_down()].get())
+        Push_to_city()
+        result = City.Update_resources_down()
+        print(result)
+        value = int(City.cells[result[0][0]].get())
         value-=1
-        City.cells[City.Update_resources_down()].set(value)
+        City.cells[result[0][0]].set(value)
         Push_to_city()
         
-
     Button(frm, text="Load", command=Load_from_file).grid(column=6, row=0)
     Button(frm, text="Push", command=Push_to_city).grid(column=6, row=1)
     Button(frm, text="Opt_up", command=Optimize_up).grid(column=6, row=2)

@@ -12,6 +12,7 @@ class city:
     def __init__(self, entities = None, number = None): # new materials have to be updated here
         self.entities: dict = {}
         self.entities_dict: dict = {}
+        self.entities_unlocked: list = []
         self.People: int = 0
         self.Food: int = 0
         self.Buildings: int = 0
@@ -29,7 +30,6 @@ class city:
         self.cells: dict = {}
         self.labels: dict = {}
         self.Suma: float = 0
-        self.problematic: str =""
 
     def Get_entities_dict(self):
         df = pd.read_excel("test.xlsx")
@@ -65,84 +65,61 @@ class city:
         self.Reset()
 
         for entity in self.entities:
-            self.People += self.entities_dict[entity]['People']*self.entities[entity]
-            self.Food += self.entities_dict[entity]['Food']*self.entities[entity]
-            self.Buildings += self.entities_dict[entity]['Buildings']*self.entities[entity]
-            self.Tools += self.entities_dict[entity]['Tools']*self.entities[entity]
-            self.Materials += self.entities_dict[entity]['Materials']*self.entities[entity]
-            self.Other += self.entities_dict[entity]['Other']*self.entities[entity]
-            self.Safety += self.entities_dict[entity]['Safety']*self.entities[entity]
-            self.Fun += self.entities_dict[entity]['Fun']*self.entities[entity]
-            self.Wood += self.entities_dict[entity]['Wood']*self.entities[entity]
-            self.Stone += self.entities_dict[entity]['Stone']*self.entities[entity]
-            self.Herbs += self.entities_dict[entity]['Herbs']*self.entities[entity]
-            self.Transport += self.entities_dict[entity]['Transport']*self.entities[entity]
+            for res in resources:
+                setattr(self, res, (getattr(self, res)+self.entities_dict[entity][res]*self.entities[entity]))
 
     def Update_resources_up(self):
-        ranking = {}
-        
-        City2 = city()
-        
-        for entity in self.entities:
+        ranking = {}   
+        City2 = city()  
+
+        for entity in self.entities_unlocked: #For each possible entity create a new city and add this entity to it 
             Suma = 0
             City2 = copy.copy(self)
-            City2.Get_resources()
-            City2.People += self.entities_dict[entity]['People']
-            City2.Food += self.entities_dict[entity]['Food']
-            City2.Buildings += self.entities_dict[entity]['Buildings']
-            City2.Tools += self.entities_dict[entity]['Tools']
-            City2.Materials += self.entities_dict[entity]['Materials']
-            City2.Other += self.entities_dict[entity]['Other']
-            City2.Safety += self.entities_dict[entity]['Safety']
-            City2.Fun += self.entities_dict[entity]['Fun']
-            City2.Wood += self.entities_dict[entity]['Wood']
-            City2.Stone += self.entities_dict[entity]['Stone']
-            City2.Herbs += self.entities_dict[entity]['Herbs']
-            City2.Transport += self.entities_dict[entity]['Transport']
+            City2.Suma = 0 # Reset the sum
+            for res in resources: #Add the resources for the entity
+                setattr(City2, res, (getattr(self, res)+self.entities_dict[entity][res]))
+            
             for i, res in enumerate(resources):
                 City2.Suma += getattr(City2, res)**2
+
             City2.Suma -= getattr(City2, "People")**2
+
             Suma = City2.Suma/City2.People # This is basically a optimization function. As city size inflated margin of error, we get an error per person
             Suma = round(math.log10(Suma),3) # And as it is HUGE often we get log10 to comprehend this number ;D    
             ranking[entity] = Suma
-            
-            #if tested_suma < New_suma: 
-            #    New_suma = tested_suma
-            #    New_entity = entity
+            for res in resources: #And substract them
+                setattr(City2, res, (getattr(self, res)-self.entities_dict[entity][res]))
+
         sorted_tests = sorted(ranking.items(), key=lambda x: x[1])
-        return(sorted_tests[0][0])
+        return(sorted_tests)
 
     def Update_resources_down(self):
         ranking = {}
         
         City2 = city()
         
-        for entity, value in self.entities.items():
-            if value >0:
+        for entity in self.entities_unlocked:
+            if int(self.cells[entity].get()) > 0:
                 Suma = 0
                 City2 = copy.copy(self)
-                City2.Get_resources()
-                City2.People -= self.entities_dict[entity]['People']
-                City2.Food -= self.entities_dict[entity]['Food']
-                City2.Buildings -= self.entities_dict[entity]['Buildings']
-                City2.Tools -= self.entities_dict[entity]['Tools']
-                City2.Materials -= self.entities_dict[entity]['Materials']
-                City2.Other -= self.entities_dict[entity]['Other']
-                City2.Safety -= self.entities_dict[entity]['Safety']
-                City2.Fun -= self.entities_dict[entity]['Fun']
-                City2.Wood -= self.entities_dict[entity]['Wood']
-                City2.Stone -= self.entities_dict[entity]['Stone']
-                City2.Herbs -= self.entities_dict[entity]['Herbs']
-                City2.Transport -= self.entities_dict[entity]['Transport']
+                City2.Suma = 0 # Reset the sum
+                for res in resources: #Substract the resources for the entity
+                    setattr(City2, res, (getattr(self, res)-self.entities_dict[entity][res]))
+
                 for i, res in enumerate(resources):
                     City2.Suma += getattr(City2, res)**2
+
                 City2.Suma -= getattr(City2, "People")**2
+
                 Suma = City2.Suma/City2.People # This is basically a optimization function. As city size inflated margin of error, we get an error per person
                 Suma = round(math.log10(Suma),3) # And as it is HUGE often we get log10 to comprehend this number ;D
                 ranking[entity] = Suma
 
+                for res in resources: #And add them back 
+                    setattr(City2, res, (getattr(self, res)+self.entities_dict[entity][res]))
+
         sorted_tests = sorted(ranking.items(), key=lambda x: x[1])
-        return(sorted_tests[0][0])
+        return(sorted_tests)
 
 if __name__ == "__main__":
     pass
