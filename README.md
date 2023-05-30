@@ -13,3 +13,4 @@ The app is easy and strightforward. Put the number of workshops, use "$" to lock
 - 1.1 Basic optimization
 - 1.2 Up and down optimization 
 - 1.3 Optimization and force locking
+- 1.4 Matching population distribution to the "Medieval Demographics Made Easy" by John Ross
