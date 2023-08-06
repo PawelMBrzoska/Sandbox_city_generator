@@ -11,11 +11,11 @@ The app is easy and strightforward. Put the number of workshops, use "$" to lock
 
 The plan is to be able to generate entire worlds with this script. 
 With: Continents->Countries->Domains->Towns
-For now we are in the towns scale ^^'
+For now we are in the Domains scale with space for towns customization
 
 ## Generating Towns
 
-For now generating towns is semi-autmoatic and need a innitial input and further optimization.
+For now generating towns is semi-automatic and need a initial input and further optimization. 
 
 # Rules and assumptions
 
@@ -54,4 +54,7 @@ There are few key resources:
 - 1.1 Basic optimization
 - 1.2 Up and down optimization 
 - 1.3 Optimization and force locking
-- 1.4 Matching population distribution to the "Medieval Demographics Made Easy" by John Ross
+- 2.0 New procedure -> starting with Domain level
+# Plans
+- 2.X Matching population distribution to the "Medieval Demographics Made Easy" by John Ross on the town scale.
+- 3.0 Reworking all the 
