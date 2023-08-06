@@ -121,5 +121,21 @@ class city:
         sorted_tests = sorted(ranking.items(), key=lambda x: x[1])
         return(sorted_tests)
 
+
+
+class domain:
+    def __init__(self): # new materials have to be updated here
+        self.small_farms: int = 0
+        self.big_farms: int = 0
+        self.population: int = 0
+        self.Cities: list = []
+
+    def Reset(self):
+        self.small_farms = 0
+        self.big_farms = 0
+        self.population = 0
+        self.Cities = []
+
+
 if __name__ == "__main__":
     pass
