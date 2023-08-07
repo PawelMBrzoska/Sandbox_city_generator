@@ -136,6 +136,5 @@ class domain:
         self.population = 0
         self.Cities = []
 
-
 if __name__ == "__main__":
     pass

@@ -40,7 +40,6 @@ def Start(City):
     def Exit():
         Window.destroy()
 
-
     Label(frm, text = "Hello user", anchor="w").grid(column=1, row=0)
     Button(frm, text="Start new town", command=Start_town).grid(column=1, row=1)
     Button(frm, text="Start new domain", command=Start_domain).grid(column=1, row=2)
