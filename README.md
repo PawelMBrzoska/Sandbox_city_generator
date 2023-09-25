@@ -1,13 +1,17 @@
 # Sandbox_city_generator
-My little project to manage cities for RGPs
+My little project to manage worlds for RGPs
 
-Put the number of workshops and stuff and calculate wheter it sums up or not. Then use some tools to optimize it.
+The plan is:
 
-# Running app
+# Running the app
 
-The app is easy and strightforward. Put the number of workshops, use "$" to lock the workshop. 
+The app is easy and strightforward. Run Main.py. 
+Then you can:
+- Create and balance cities
+    - Put the number of workshops and stuff and calculate whether it sums up or not. Then use some tools to optimize it. 
+    - Use "$" anywhere to lock the workshops number. 
 
-# Generating world
+## Generating world
 
 The plan is to be able to generate entire worlds with this script. 
 With: Continents->Countries->Domains->Towns
@@ -46,7 +50,6 @@ There are few key resources:
 >   - Wood - This is mainly for architecture needs. 
 >   - Stone - This is mainly for architecture needs. 
 
-- 
 
 # Changelog
 
@@ -56,5 +59,7 @@ There are few key resources:
 - 1.3 Optimization and force locking
 - 2.0 New procedure -> starting with Domain level
 # Plans
-- 2.X Matching population distribution to the "Medieval Demographics Made Easy" by John Ross on the town scale.
-- 3.0 Reworking all the 
+- Matching population distribution to the "Medieval Demographics Made Easy" by John Ross on the town scale. Or smthg?
+- Reworking all the workshops
+- Consideration of the terrain and geographic during generation of domain (where the cities will be and where the resources are produced)
+- Terrain generation
