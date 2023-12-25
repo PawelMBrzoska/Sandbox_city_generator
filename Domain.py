@@ -55,6 +55,8 @@ def Domain(New_domain):
     #                 Functions               #
     ###########################################
     def gen_cities():
+        average_city_pop = 5000
+        average_town_pop = 1500
         pop = int(City_population_var.get())
         if pop<250: 
             capital_population_var.set(0)
